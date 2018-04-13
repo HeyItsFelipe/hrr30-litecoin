@@ -49,7 +49,10 @@ app.post('/signup', function(req, res){
   //After user submits sign up form, user is redirected
   //to calendar.  At the time of this comment, /calendar has
   //not been created yet.
-  res.redirect('/calendar');
+  req.session.regenerate(function(){
+    req.session.user = req.body.username;
+    res.redirect('/homepage');
+  });
 });
 
 //When a user logs in

@@ -12,16 +12,17 @@ var userSchema = mongoose.Schema({
     type: String,
     unique: true
   },
-  hPassword: String,
+  password: String,
   email: String
 });
 
 var User = mongoose.model('User', userSchema);
 
 const saveUser = (userData, callback) => {
+  console.log(userData);
   let userInfo = new User({
     username: userData.username,
-    hPassword: userData.hPassword,
+    password: userData.password,
     email: userData.email
   });
 
@@ -34,11 +35,11 @@ const saveUser = (userData, callback) => {
   });
 };
 
-const findUserHash = (userData) => {
-  User.findOne({username: userData.username}, function(err, user){
-    return user.hPassword;
+const findUserHash = (username, callback) => {
+  User.find({username: username}, 'username password', function(err, user){
+    callback(user[0].password);
   });
 }
 
 module.exports.saveUser = saveUser;
-module.exports.findUser = findUserHash;
+module.exports.findUserHash = findUserHash;

@@ -9,7 +9,7 @@ import Checkbox from 'react-bootstrap/lib/Checkbox';
 import Col from 'react-bootstrap/lib/Col';
 import Button from 'react-bootstrap/lib/Button';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom';
 import Calendar from './components/Calendar.jsx';
 
 class App extends React.Component {
@@ -17,7 +17,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       username: '',
-      password: ''
+      password: '',
+      calendarRedirect: false
       // remember: false // for adding more functionality later
     };
   }
@@ -41,12 +42,15 @@ class App extends React.Component {
     // need to change this to interact with server on click
     $.ajax({
       method: 'POST',
-      url: '/login',
+      url: '/signin',
       contentType: 'application/json',
       data: JSON.stringify(data),
       dataType: 'json',
       success: (data) => {
-        console.log('Success! Should redirect to homepage');
+        console.log('Success! Should redirect to calendar');
+        this.setState({
+          calendarRedirect: true
+        });
       },
       error: (err) => {
         console.log('You got an error!')
@@ -57,6 +61,10 @@ class App extends React.Component {
 
   // need to add functionality for redirecting to signup page when signup button is clicked
   render () {
+    if(this.state.calendarRedirect) {
+      return <Redirect to='/calendar' />;
+    }
+
     return (
       <Form horizontal>
         <FormGroup controlId="formHorizontalEmail">
@@ -112,7 +120,8 @@ ReactDOM.render((
     <div>
       <Switch>
         <Route exact path='/' component={App} />
-        <Route exact path='/signup' component={Signup}/>
+        <Route exact path='/signup' component={Signup} />
+        <Route exact path='/calendar' component={Calendar} />
       </Switch>
     </div>
   </Router>

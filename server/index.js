@@ -27,12 +27,12 @@ app.use(session({
 app.use(express.static(__dirname + '/../client/dist'));
 
 //A user's homepage
-app.get('/homepage', restrict, function(req, res){
+app.get('/calendar', restrict, function(req, res){
   res.send(JSON.stringify('This is the home page!'));
 });
 
 //When a user signs up
-app.get('/login', function(req, res){
+app.get('/signin', function(req, res){
   auth.checkCredentials(req.body, req, res)
 });
 
@@ -57,7 +57,7 @@ app.post('/signup', function(req, res){
 });
 
 //When a user logs in
-app.post('/login', function(req, res){
+app.post('/signin', function(req, res){
   auth.checkCredentials(req.body, req, res);
 });
 

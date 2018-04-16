@@ -32,10 +32,10 @@ const checkCredentials = function(obj, req, res){
       if (match){
         req.session.regenerate(function(){
           req.session.user = username;
-          res.redirect('/homepage');
+          res.redirect('/calendar');
         });
       } else {
-        res.redirect('/login')
+        res.redirect('/signin')
       }
     });
   });

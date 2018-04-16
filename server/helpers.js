@@ -4,7 +4,7 @@ const express = require('express');
 const db = require('../database/index.js');
 
 
-const saveCredentials = function(obj){
+const saveCredentials = function(obj, cb){
   console.log('save credientials:', obj);
   var password = obj.password;
 
@@ -17,7 +17,8 @@ const saveCredentials = function(obj){
     //Save username and passsword
     obj.password = hash;
     db.saveUser(obj, function(){
-      console.log('User saved!')
+      console.log('User saved!');
+      cb();
       });
     }
   });

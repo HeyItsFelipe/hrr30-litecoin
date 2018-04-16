@@ -18,6 +18,17 @@ var userSchema = mongoose.Schema({
 
 var User = mongoose.model('User', userSchema);
 
+var eventSchema = mongoose.Schema({
+  id: Schema.Types.ObjectId,
+  title: String,
+  allDay: Boolean,
+  start: Date,
+  end: Date,
+  desc: String
+})
+
+var Event = mongoose.model('Event', eventSchema);
+
 const saveUser = (userData, callback) => {
   console.log(userData);
   let userInfo = new User({

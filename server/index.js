@@ -28,7 +28,7 @@ app.use(express.static(__dirname + '/../client/dist'));
 
 //A user's homepage
 app.get('/homepage', restrict, function(req, res){
-  res.send('This is the home page!');
+  res.send(JSON.stringify('This is the home page!'));
 });
 
 //When a user signs up
@@ -45,14 +45,15 @@ app.get('/signup', (req, res) => {
 });
 
 app.post('/signup', function(req, res){
-  auth.saveCredentials(req.body);
+  auth.saveCredentials(req.body, function(){
+    req.session.regenerate(function(){
+      req.session.user = req.body.username;
+      res.redirect('/homepage');
+    });
+  });
   //After user submits sign up form, user is redirected
   //to calendar.  At the time of this comment, /calendar has
   //not been created yet.
-  req.session.regenerate(function(){
-    req.session.user = req.body.username;
-    res.redirect('/homepage');
-  });
 });
 
 //When a user logs in

@@ -35,25 +35,25 @@ class App extends React.Component {
     //console.log(this.state.username);
   }
 
-  onButtonClick() {
+  onButtonClick(e) {
+    e.preventDefault();
+    var data = {username: this.state.username, password: this.state.password};
     // need to change this to interact with server on click
-    console.log(this.state);
+    $.ajax({
+      method: 'POST',
+      url: '/login',
+      contentType: 'application/json',
+      data: JSON.stringify(data),
+      dataType: 'json',
+      success: (data) => {
+        console.log('Success! Should redirect to homepage');
+      },
+      error: (err) => {
+        console.log('You got an error!')
+      }
+
+    });
   }
-
-  // onSignupClick() {
-  //   $.ajax({
-  //     method: 'GET',
-  //     url: '/signup',
-  //     contentType: 'application/json',
-  //     success: (data) => {
-  //       console.log('Success! Should redirect to signup page');
-  //     },
-  //     error: (err) => {
-  //       console.log('Error: ', err);
-  //     }
-
-  //   });
-  // }
 
   // need to add functionality for redirecting to signup page when signup button is clicked
   render () {
@@ -93,7 +93,7 @@ class App extends React.Component {
 
         <FormGroup>
           <Col smOffset={2} sm={10}>
-            <Button type="submit" onClick={this.onButtonClick.bind(this)}>Sign in</Button>
+            <Button type="button" onClick={this.onButtonClick.bind(this)}>Sign in</Button>
           </Col>
         </FormGroup>
 

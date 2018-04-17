@@ -17,9 +17,9 @@ var userSchema = mongoose.Schema({
 });
 
 var User = mongoose.model('User', userSchema);
-
+var ObjectId = mongoose.Schema.Types.ObjectId;
 var eventSchema = mongoose.Schema({
-  id: Schema.Types.ObjectId,
+  id: ObjectId,
   title: String,
   allDay: Boolean,
   start: Date,

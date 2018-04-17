@@ -48,7 +48,7 @@ app.post('/signup', function(req, res){
   auth.saveCredentials(req.body, function(){
     req.session.regenerate(function(){
       req.session.user = req.body.username;
-      res.redirect('/homepage');
+      res.redirect('/calendar');
     });
   });
   //After user submits sign up form, user is redirected

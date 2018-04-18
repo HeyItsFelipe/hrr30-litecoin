@@ -5,6 +5,7 @@ export default [
     allDay: true,
     start: new Date(2018, 3, 14),
     end: new Date(2018, 3, 14),
+    username: 'test'
   },
   {
     id: 1,

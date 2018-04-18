@@ -1,6 +1,6 @@
 export default [
   {
-    id: 0,
+    // id: 0,
     title: 'Assessment Test',
     allDay: true,
     start: new Date(2018, 3, 14),

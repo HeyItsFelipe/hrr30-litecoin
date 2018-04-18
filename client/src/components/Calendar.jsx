@@ -24,7 +24,8 @@ class Calendar extends React.Component {
 
     this.addEvent();
 
-    this.getEvents(this.props.username);
+    // this.getEvents(this.props.username);
+
     // console.log(this.state.events); // getEvents is asynchronous, so this won't wait to reflect this.state.events after ajax call is finished
 
   }
@@ -42,7 +43,7 @@ class Calendar extends React.Component {
         this.setState({
           events: data
         });
-        console.log(data);
+        console.log('data retrieved in client: ', data);
       }
     });
   }
@@ -58,6 +59,7 @@ class Calendar extends React.Component {
       },
       success: data => {
         console.log('Data saved: ', data);
+        this.getEvents(this.props.username);
       }
 
     });

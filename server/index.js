@@ -70,6 +70,7 @@ app.get('/events', function(req, res) {
       res.sendStatus(500);
     } else {
       console.log(`Events found for ${req.query.username}`);
+      console.log('data found in app.get in server: ', data);
       res.json(data);
     }
   });

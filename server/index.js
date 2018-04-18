@@ -4,6 +4,7 @@ const app = express();
 const bcrypt = require('bcrypt-nodejs');
 const auth = require('./helpers.js');
 const session = require('express-session');
+const db = require('../database/index.js');
 
 /*
 exports.headers = {
@@ -59,6 +60,31 @@ app.post('/signup', function(req, res){
 //When a user logs in
 app.post('/signin', function(req, res){
   auth.checkCredentials(req.body, req, res);
+});
+
+app.get('/events', function(req, res) {
+  // console.log('req.body in server\'s app.get is: ', req.params);
+  console.log('req in server\'s app.get: ', req.query);
+  db.findUserEvents(req.query.username, (err, data) => {
+    if (err) {
+      res.sendStatus(500);
+    } else {
+      res.json(data);
+    }
+  });
+});
+
+app.post('/events', function(req, res) {
+
+  console.log('req.body in server\'s app.post: ', req.body);
+  db.addUserEvent(req.body, (err, data) => {
+    if (err) {
+      res.sendStatus(500);
+    } else {
+      // res.json(data);
+      res.status(200).send(`Event saved for ${req.body}!`);
+    }
+  });
 });
 
 

@@ -24,7 +24,8 @@ var eventSchema = mongoose.Schema({
   allDay: Boolean,
   start: Date,
   end: Date,
-  desc: String
+  desc: String,
+  username: String
 })
 
 var Event = mongoose.model('Event', eventSchema);
@@ -50,7 +51,35 @@ const findUserHash = (username, callback) => {
   User.find({username: username}, 'username password', function(err, user){
     callback(user[0].password);
   });
-}
+};
+
+const findUserEvents = (username, callback) => {
+  Event.find({username: username}, (err, userEvents) => {
+    callback(userEvents);
+  });
+};
+
+const addUserEvent = (event, callback) => {
+  let userEvent = new Event({
+    id: event.id, // not sure what id should be?
+    title: event.title,
+    allDay: event.allDay,
+    start: event.start,
+    end: event.end,
+    desc: event.desc,
+    username: event.username
+  });
+
+  userEvent.save(err => {
+    if (err) {
+      console.log(err);
+    } else {
+      callback();
+    }
+  });
+};
 
 module.exports.saveUser = saveUser;
 module.exports.findUserHash = findUserHash;
+module.exports.findUserEvents = findUserEvents;
+module.exports.addUserEvent = addUserEvent;

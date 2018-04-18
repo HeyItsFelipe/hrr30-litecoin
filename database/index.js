@@ -17,14 +17,16 @@ var userSchema = mongoose.Schema({
 });
 
 var User = mongoose.model('User', userSchema);
-var ObjectId = mongoose.Schema.Types.ObjectId;
+// var ObjectId = mongoose.Schema.Types.ObjectId;
+var ObjectId = mongoose.Types.ObjectId;
 var eventSchema = mongoose.Schema({
-  id: ObjectId,
+  // id: ObjectId,
   title: String,
   allDay: Boolean,
   start: Date,
   end: Date,
-  desc: String
+  desc: String,
+  username: String
 })
 
 var Event = mongoose.model('Event', eventSchema);
@@ -50,7 +52,42 @@ const findUserHash = (username, callback) => {
   User.find({username: username}, 'username password', function(err, user){
     callback(user[0].password);
   });
-}
+};
+
+const findUserEvents = (username, callback) => {
+  Event.find({username: username}, (err, userEvents) => {
+    console.log(`userEvents found in database: ${userEvents}`);
+    callback(err, userEvents);
+  });
+};
+
+const addUserEvent = (event, callback) => {
+  // console.log(event.ObjectId);
+  // let temp = new ObjectId;
+  // console.log(temp);
+
+  let userEvent = new Event({
+    id: new ObjectId, // not sure what id should be?; event.ObjectId is undefined
+    title: event.title,
+    allDay: event.allDay,
+    start: event.start,
+    end: event.end,
+    desc: event.desc,
+    username: event.username
+  });
+
+  console.log('userEvent added in database: ', userEvent);
+
+  userEvent.save(err => {
+    if (err) {
+      console.log(err);
+    } else {
+      callback();
+    }
+  });
+};
 
 module.exports.saveUser = saveUser;
 module.exports.findUserHash = findUserHash;
+module.exports.findUserEvents = findUserEvents;
+module.exports.addUserEvent = addUserEvent;

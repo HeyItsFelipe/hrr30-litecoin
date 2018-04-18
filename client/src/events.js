@@ -1,10 +1,11 @@
 export default [
   {
-    id: 0,
+    // id: 0,
     title: 'Assessment Test',
     allDay: true,
     start: new Date(2018, 3, 14),
     end: new Date(2018, 3, 14),
+    username: 'test'
   },
   {
     id: 1,

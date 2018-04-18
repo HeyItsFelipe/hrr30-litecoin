@@ -15,7 +15,9 @@ class Signup extends React.Component {
     this.state = {
       username: '',
       email: '',
-      password: ''
+      password: '',
+      passwordError: '',
+      emailError: ''
     };
   }
 
@@ -47,17 +49,68 @@ class Signup extends React.Component {
   }
 
   handleClick() {
-    this.handleSubmit(this.state.username, this.state.email, this.state.password);
+    this.setState({
+      passwordError: '',
+      emailError: ''
+    });
+
+    if(this.passwordIsValid() && this.emailIsValid()) {
+      console.log('I have been clicked!!!');
+      this.handleSubmit(this.state.username, this.state.email, this.state.password);
+    }
+
+    if(!this.passwordIsValid()){
+      this.setState({
+        passwordError: 'Invalid Password!'
+      });
+    }
+
+    if(!this.emailIsValid()) {
+      this.setState({
+        emailError: 'Invalid Email!'
+      });
+    }
+  }
+
+  passwordIsValid() {
+    return this.state.password.length > 4;
+  }
+
+  emailIsValid() {
+    return this.state.email.includes('@');
+  }
+
+  passwordValidationState() {
+    const passwordLength = this.state.password.length;
+    if (passwordLength > 4) {
+      return 'success';
+    } else if (passwordLength > 2) {
+      return 'warning';
+    } else if (passwordLength > 0) {
+      return 'error';
+    }
+    return null;
+  }
+
+  emailValidationState() {
+    const emailString = this.state.email;
+    if(emailString.length === 0) {
+      return null;
+    } else if(emailString.includes('@')) {
+      return 'success';
+    } else if(!emailString.includes('@')){
+      return 'error';
+    }
   }
 
   render () {
     return (
-      <Form horizontal>
+      <Form horizontal className="signup-form">
         <FormGroup controlId="formHorizontalUsername">
-          <Col componentClass={ControlLabel} sm={2}>
+          <Col componentClass={ControlLabel} smOffset={3} sm={2}>
             Username
           </Col>
-          <Col sm={10}>
+          <Col sm={3}>
             <FormControl
             type="text"
             value={this.state.username}
@@ -66,11 +119,11 @@ class Signup extends React.Component {
           </Col>
         </FormGroup>
 
-        <FormGroup controlId="formHorizontalEmail">
-          <Col componentClass={ControlLabel} sm={2}>
+        <FormGroup controlId="formHorizontalEmail" validationState={this.emailValidationState()}>
+          <Col componentClass={ControlLabel} smOffset={3} sm={2}>
             Email
           </Col>
-          <Col sm={10}>
+          <Col sm={3}>
             <FormControl
             type="email"
             value={this.state.email}
@@ -78,12 +131,15 @@ class Signup extends React.Component {
             placeholder="Email" />
           </Col>
         </FormGroup>
+        <Col smOffset={5} sm={3}>
+          <div className="invalid-block text-center text-danger">{this.state.emailError}</div>
+        </Col>
 
-        <FormGroup controlId="formHorizontalPassword">
-          <Col componentClass={ControlLabel} sm={2}>
+        <FormGroup controlId="formHorizontalPassword" validationState={this.passwordValidationState()}>
+          <Col componentClass={ControlLabel} smOffset={3} sm={2}>
             Password
           </Col>
-          <Col sm={10}>
+          <Col sm={3}>
             <FormControl
             type="password"
             value={this.state.password}
@@ -91,9 +147,12 @@ class Signup extends React.Component {
             placeholder="Password" />
           </Col>
         </FormGroup>
+        <Col smOffset={5} sm={3}>
+          <div className="invalid-block text-center text-danger">{this.state.passwordError}</div>
+        </Col>
 
         <FormGroup>
-          <Col smOffset={2} sm={10}>
+          <Col smOffset={5} sm={10}>
             <Button type="button" onClick={this.handleClick.bind(this)}>Sign up</Button>
           </Col>
         </FormGroup>

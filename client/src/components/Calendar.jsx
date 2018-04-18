@@ -22,10 +22,11 @@ class Calendar extends React.Component {
     // state object can be accessed via this.props.location.state in the redirected-to component
     // this.getEvents(this.props.location.state.username);
 
+    this.addEvent();
+
     this.getEvents(this.props.username);
     // console.log(this.state.events); // getEvents is asynchronous, so this won't wait to reflect this.state.events after ajax call is finished
 
-    this.addEvent();
   }
 
   getEvents(username) {
@@ -41,6 +42,7 @@ class Calendar extends React.Component {
         this.setState({
           events: data
         });
+        console.log(data);
       }
     });
   }

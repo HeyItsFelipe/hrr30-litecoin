@@ -55,13 +55,15 @@ const findUserHash = (username, callback) => {
 
 const findUserEvents = (username, callback) => {
   Event.find({username: username}, (err, userEvents) => {
-    callback(userEvents);
+    callback(err, userEvents);
   });
 };
 
 const addUserEvent = (event, callback) => {
+  // console.log(event.ObjectId);
+
   let userEvent = new Event({
-    id: event.id, // not sure what id should be?
+    id: event.ObjectId, // not sure what id should be?; event.ObjectId is undefined
     title: event.title,
     allDay: event.allDay,
     start: event.start,

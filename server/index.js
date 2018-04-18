@@ -69,6 +69,7 @@ app.get('/events', function(req, res) {
     if (err) {
       res.sendStatus(500);
     } else {
+      console.log(`Events found for ${req.query.username}`);
       res.json(data);
     }
   });
@@ -77,13 +78,13 @@ app.get('/events', function(req, res) {
 app.post('/events', function(req, res) {
 
   console.log('req.body in server\'s app.post: ', req.body);
-  db.addUserEvent(req.body, (err, data) => {
-    if (err) {
-      res.sendStatus(500);
-    } else {
+  db.addUserEvent(req.body, () => {
+    // if (err) {
+    //   res.sendStatus(500);
+    // } else {
       // res.json(data);
       res.status(200).send(`Event saved for ${req.body}!`);
-    }
+    // }
   });
 });
 

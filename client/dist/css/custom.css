@@ -1,0 +1,10 @@
+
+/*Signup page CSS*/
+.signup-form {
+  margin-top: 25vh;
+}
+
+.invalid-block {
+  margin-bottom: 10px;
+  margin-top: -5px;
+}

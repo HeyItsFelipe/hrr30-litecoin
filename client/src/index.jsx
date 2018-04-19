@@ -19,7 +19,8 @@ class App extends React.Component {
     this.state = {
       view: '',
       username: '',
-      password: ''
+      password: '',
+      error: ''
     };
   }
 
@@ -50,7 +51,10 @@ class App extends React.Component {
         this.changeView('calendar');
       },
       error: (err) => {
-        console.log('You got an error!')
+        console.log('You got an error!');
+        this.setState({
+          error: 'Check username and/or password'
+        });
       }
     });
   }
@@ -94,6 +98,10 @@ class App extends React.Component {
               placeholder="Password" />
             </Col>
           </FormGroup>
+
+          <Col smOffset={5} sm={3}>
+            <div className="text-center text-danger invalid-text">{this.state.error}</div>
+          </Col>
 
           <FormGroup>
             <Col smOffset={5} sm={7}>

@@ -34,7 +34,7 @@ app.get('/calendar', restrict, function(req, res){
 
 //When a user signs up
 app.get('/signin', function(req, res){
-  auth.checkCredentials(req.body, req, res)
+  auth.checkCredentials(req.body, req, res);
 });
 
 app.get('/signup', (req, res) => {

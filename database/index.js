@@ -49,8 +49,13 @@ const saveUser = (userData, callback) => {
 };
 
 const findUserHash = (username, callback) => {
+  console.log('Username is: ' + username);
   User.find({username: username}, 'username password', function(err, user){
-    callback(user[0].password);
+    if(user.length) {
+      callback(user[0].password);
+    } else {
+      callback('This will not match hash.');
+    }
   });
 };
 
@@ -65,7 +70,6 @@ const addUserEvent = (event, callback) => {
   // console.log(event.ObjectId);
   // let temp = new ObjectId;
   // console.log(temp);
-
   let userEvent = new Event({
     id: new ObjectId, // not sure what id should be?; event.ObjectId is undefined
     title: event.title,

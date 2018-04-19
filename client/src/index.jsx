@@ -68,12 +68,12 @@ class App extends React.Component {
       return <Calendar username={this.state.username}/>
     } else {
       return (
-        <Form horizontal>
+        <Form horizontal className="signin-form">
           <FormGroup controlId="formHorizontalEmail">
-            <Col componentClass={ControlLabel} sm={2}>
+            <Col componentClass={ControlLabel} smOffset={3} sm={2}>
               Username
             </Col>
-            <Col sm={8}>
+            <Col sm={3}>
               <FormControl
               type="username"
               value={this.state.username}
@@ -83,10 +83,10 @@ class App extends React.Component {
           </FormGroup>
 
           <FormGroup controlId="formHorizontalPassword">
-            <Col componentClass={ControlLabel} sm={2}>
+            <Col componentClass={ControlLabel} smOffset={3} sm={2}>
               Password
             </Col>
-            <Col sm={10}>
+            <Col sm={3}>
               <FormControl
               type="password"
               value={this.state.password}
@@ -96,20 +96,20 @@ class App extends React.Component {
           </FormGroup>
 
           <FormGroup>
-            <Col smOffset={2} sm={10}>
+            <Col smOffset={5} sm={7}>
               <Checkbox>Remember me</Checkbox>
             </Col>
           </FormGroup>
 
           <FormGroup>
-            <Col smOffset={2} sm={10}>
+            <Col smOffset={5} sm={7}>
               <Button onClick={this.onSignInClick.bind(this)}>Sign in</Button>
             </Col>
           </FormGroup>
 
           <FormGroup>
-            <Col smOffset={2} sm={10}>
-              <Button bsStyle="link" onClick={this.onSignUpClick.bind(this)}>Sign up</Button>
+            <Col smOffset={5} sm={7}>
+              <Button bsStyle="link" className="signup-link" onClick={this.onSignUpClick.bind(this)}>Sign up</Button>
             </Col>
           </FormGroup>
         </Form>

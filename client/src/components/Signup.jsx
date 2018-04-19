@@ -132,7 +132,7 @@ class Signup extends React.Component {
           </Col>
         </FormGroup>
         <Col smOffset={5} sm={3}>
-          <div className="invalid-block text-center text-danger">{this.state.emailError}</div>
+          <div className="text-center text-danger invalid-text">{this.state.emailError}</div>
         </Col>
 
         <FormGroup controlId="formHorizontalPassword" validationState={this.passwordValidationState()}>
@@ -148,11 +148,11 @@ class Signup extends React.Component {
           </Col>
         </FormGroup>
         <Col smOffset={5} sm={3}>
-          <div className="invalid-block text-center text-danger">{this.state.passwordError}</div>
+          <div className="text-center text-danger invalid-text">{this.state.passwordError}</div>
         </Col>
 
         <FormGroup>
-          <Col smOffset={5} sm={10}>
+          <Col smOffset={5} sm={7}>
             <Button type="button" onClick={this.handleClick.bind(this)}>Sign up</Button>
           </Col>
         </FormGroup>

@@ -1,10 +1,21 @@
 
-/*Signup page CSS*/
+/*** Signin page CSS ***/
+
+.signin-form {
+  margin-top: 25vh;
+}
+
+.signup-link {
+  padding-left: 8px;
+}
+
+/*** Signup page CSS ***/
+
 .signup-form {
   margin-top: 25vh;
 }
 
-.invalid-block {
+.invalid-text {
   margin-bottom: 10px;
   margin-top: -5px;
 }

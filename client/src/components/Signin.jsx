@@ -60,7 +60,7 @@ class Signin extends React.Component {
           </Col>
           <Col sm={8}>
             <FormControl
-            type="username"
+            type="text"
             value={this.state.username}
             onChange={this.handleUsernameChange.bind(this)}
             placeholder="Username" />

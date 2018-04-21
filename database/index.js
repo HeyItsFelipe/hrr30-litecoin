@@ -25,7 +25,7 @@ var eventSchema = mongoose.Schema({
   allDay: Boolean,
   start: Date,
   end: Date,
-  desc: String,
+  // desc: String,
   username: String
 })
 
@@ -76,7 +76,7 @@ const addUserEvent = (event, callback) => {
     allDay: event.allDay,
     start: event.start,
     end: event.end,
-    desc: event.desc,
+    // desc: event.desc,
     username: event.username
   });
 

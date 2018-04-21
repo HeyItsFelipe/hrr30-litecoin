@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
+// import Button from 'react-bootstrap/lib/Button';
 //importing hardcoded events so calendar can render
 import events from '../events';
 import $ from 'jquery';
@@ -37,15 +38,20 @@ class Calendar extends React.Component {
     };
   }
 
+  changeView() {
+    console.log('Create an Event button in Calendar has been clicked');
+    this.props.changeView('addEvent');
+  }
+
   componentDidMount() {
     // console.log('username for this calendar: ', this.props.location.state.username);
     // from react router documentation:
     // state object can be accessed via this.props.location.state in the redirected-to component
     // this.getEvents(this.props.location.state.username);
 
-    this.addEvent();
+    // this.addEvent();
 
-    // this.getEvents(this.props.username);
+    this.getEvents(this.props.username);
 
     // console.log(this.state.events); // getEvents is asynchronous, so this won't wait to reflect this.state.events after ajax call is finished
 
@@ -61,6 +67,8 @@ class Calendar extends React.Component {
         console.log('Error retrieving events :', error);
       },
       success: data => {
+        console.dir(`this in Calendar.jsx's getEvents: `);
+        console.dir(this);
         this.setState({
           events: data
         });
@@ -69,22 +77,26 @@ class Calendar extends React.Component {
     });
   }
 
-  addEvent(/*should take in an event to add*/) {
-    $.ajax({
-      method: 'POST',
-      url: '/events',
-      data: JSON.stringify(events[0]),
-      contentType: 'application/json',
-      error: error => {
-        console.log('Error adding event: ', error);
-      },
-      success: data => {
-        console.log('Data saved: ', data);
-        this.getEvents(this.props.username);
-      }
+  // addEvent(event) {
+  //   $.ajax({
+  //     method: 'POST',
+  //     url: '/events',
+  //     data: JSON.stringify(event),
+  //     contentType: 'application/json',
+  //     error: error => {
+  //       console.log('Error adding event: ', error);
+  //     },
+  //     success: data => {
+  //       console.log('Data saved: ', data);
+  //       // console.log(this.props);
+  //       // console.log(this.username);
+  //       console.log(this);
+  //       this.getEvents(this.username);
+  //       this.changeView('calendar');
+  //     }
 
-    });
-  }
+  //   });
+  // }
 
   // // When you choose a particular slot on the calendar
   // onSlotChange(slotInfo) {
@@ -101,23 +113,26 @@ class Calendar extends React.Component {
 
   render() {
     return (
-      <BigCalendar
-        events={this.state.events}
-        selectable
-        defaultDate={new Date()}
-        // views={allViews}
-       //  onSelectEvent={event => this.onEventClick(event)}
-       //  onSelectSlot={(slotInfo) => this.onSlotChange(slotInfo)}
-       //  step={30}
-       //  timeslots={2}
-       //  defaultView='week'
-       //  components={{
-       //   event: Event,
-       //   agenda: {
-       //    event: EventAgenda
-       //   }
-       // }}
-      />
+      <div>
+        <button onClick={this.changeView.bind(this)}>Add an Event</button>
+        <BigCalendar
+          events={this.state.events}
+          selectable
+          defaultDate={new Date()}
+          // views={allViews}
+         //  onSelectEvent={event => this.onEventClick(event)}
+         //  onSelectSlot={(slotInfo) => this.onSlotChange(slotInfo)}
+         //  step={30}
+         //  timeslots={2}
+         //  defaultView='week'
+         //  components={{
+         //   event: Event,
+         //   agenda: {
+         //    event: EventAgenda
+         //   }
+         // }}
+        />
+      </div>
     );
   }
 }

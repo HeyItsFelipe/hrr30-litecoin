@@ -12,6 +12,7 @@ import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom';
 import Calendar from './components/Calendar.jsx';
 import Signin from './components/Signin.jsx';
+import AddEvent from './components/AddEvent.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -25,6 +26,8 @@ class App extends React.Component {
   }
 
   changeView(newView) {
+    console.log(`view in index.jsx has been changed to ${newView}`);
+    // console.dir(Calendar.prototype.addEvent);
     this.setState({
       view: newView
     });
@@ -69,7 +72,10 @@ class App extends React.Component {
     if (view === 'signup') {
       return <Signup changeView={this.changeView.bind(this)} />
     } else if(view === 'calendar') {
-      return <Calendar username={this.state.username}/>
+      return <Calendar username={this.state.username} changeView={this.changeView.bind(this)}/>
+    } else if (view === 'addEvent') {
+      // not sure if getEvents is being passed in correctly here?
+      return <AddEvent username={this.state.username} changeView={this.changeView.bind(this)} getEvents={Calendar.prototype.getEvents.bind(this)}/>
     } else {
       return (
         <Form horizontal className="signin-form">
@@ -79,7 +85,7 @@ class App extends React.Component {
             </Col>
             <Col sm={3}>
               <FormControl
-              type="username"
+              type="text"
               value={this.state.username}
               onChange={this.handleUsernameChange.bind(this)}
               placeholder="Username" />

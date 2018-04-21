@@ -15,6 +15,14 @@
   margin-top: 25vh;
 }
 
+/*** Add Event page ***/
+.addevent-form {
+  margin-top: 25vh;
+}
+
+
+/*** Error Text ***/
+
 .invalid-text {
   margin-bottom: 10px;
   margin-top: -5px;

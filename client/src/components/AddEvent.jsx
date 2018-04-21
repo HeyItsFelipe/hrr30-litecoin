@@ -94,25 +94,25 @@ class AddEvent extends React.Component {
 
   render () {
     return (
-      <Form horizontal>
+      <Form horizontal className="addevent-form">
         <FormGroup controlId="formHorizontalTitle">
-          <Col componentClass={ControlLabel} sm={2}>
-            Title
+          <Col componentClass={ControlLabel} smOffset={3} sm={2}>
+            Event Title
           </Col>
-          <Col sm={8}>
+          <Col sm={3}>
             <FormControl
             type="text"
             value={this.state.title}
             onChange={this.handleTitleChange.bind(this)}
-            placeholder="Title" />
+            placeholder="Eric's Party!!!" />
           </Col>
         </FormGroup>
 
         <FormGroup>
-          <Col componentClass={ControlLabel} sm={2}>
-            Start
+          <Col componentClass={ControlLabel} smOffset={3} sm={2}>
+            Start Date/Time
           </Col>
-          <Col sm={8}>
+          <Col sm={3}>
             <Datetime
             id="start-dateTimePicker"
             onChange={this.handleStartDateChange.bind(this)} />
@@ -120,10 +120,10 @@ class AddEvent extends React.Component {
         </FormGroup>
 
         <FormGroup>
-          <Col componentClass={ControlLabel} sm={2}>
-            End
+          <Col componentClass={ControlLabel} smOffset={3} sm={2}>
+            End Day/Time
           </Col>
-          <Col sm={8}>
+          <Col sm={3}>
             <Datetime
             id="end-dateTimePicker"
             onChange={this.handleEndChange.bind(this)} />
@@ -131,7 +131,7 @@ class AddEvent extends React.Component {
         </FormGroup>
 
         <FormGroup>
-          <Col smOffset={2} sm={10}>
+          <Col smOffset={5} sm={7}>
             <Button onClick={this.onCreateClick.bind(this)}>Create</Button>
           </Col>
         </FormGroup>

@@ -91,6 +91,12 @@ const addUserEvent = (event, callback) => {
   });
 };
 
+const deleteEvent = (eventID, callback) => {
+  //findByIdAndRemove(id, options, callback)
+  Event.findByIdAndRemove(eventID, callback);
+};
+
+module.exports.deleteEvent = deleteEvent;
 module.exports.saveUser = saveUser;
 module.exports.findUserHash = findUserHash;
 module.exports.findUserEvents = findUserEvents;

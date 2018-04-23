@@ -38,9 +38,10 @@ class Calendar extends React.Component {
     };
   }
 
-  changeView() {
-    console.log('Create an Event button in Calendar has been clicked');
-    this.props.changeView('addEvent');
+  changeView(view) {
+    console.log('Changing views...');
+    console.log(view)
+    this.props.changeView(view);
   }
 
   componentDidMount() {
@@ -114,7 +115,8 @@ class Calendar extends React.Component {
   render() {
     return (
       <div>
-        <button onClick={this.changeView.bind(this)}>Add an Event</button>
+        <button onClick={this.changeView.bind(this, 'addEvent')}>Add Event</button>
+        <button onClick={this.changeView.bind(this, 'deleteEvent')}>Delete Event</button>
         <BigCalendar
           events={this.state.events}
           selectable

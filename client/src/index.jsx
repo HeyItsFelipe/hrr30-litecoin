@@ -13,6 +13,7 @@ import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-ro
 import Calendar from './components/Calendar.jsx';
 import Signin from './components/Signin.jsx';
 import AddEvent from './components/AddEvent.jsx';
+import DeleteEvent from './components/DeleteEvent.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -76,6 +77,8 @@ class App extends React.Component {
     } else if (view === 'addEvent') {
       // not sure if getEvents is being passed in correctly here?
       return <AddEvent username={this.state.username} changeView={this.changeView.bind(this)} getEvents={Calendar.prototype.getEvents.bind(this)}/>
+    } else if(view === 'deleteEvent') {
+      return <DeleteEvent username={this.state.username} />
     } else {
       return (
         <Form horizontal className="signin-form">

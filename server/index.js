@@ -89,6 +89,15 @@ app.post('/events', function(req, res) {
   });
 });
 
+app.delete('/deleteEvent', function(req, res) {
+  db.deleteEvent(req.body.eventID, (err, data) => {
+    if(err) {
+      console.log(err);
+    }
+    console.log('/deleteEvent success!!!');
+  });
+});
+
 
 function restrict(req, res, next){
   console.log(req.session);

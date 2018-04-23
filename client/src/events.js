@@ -1,3 +1,5 @@
+//Example data
+
 export default [
   {
     // id: 0,

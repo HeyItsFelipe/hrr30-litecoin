@@ -9,9 +9,7 @@ import Checkbox from 'react-bootstrap/lib/Checkbox';
 import Col from 'react-bootstrap/lib/Col';
 import Button from 'react-bootstrap/lib/Button';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
-import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom';
 import Calendar from './components/Calendar.jsx';
-import Signin from './components/Signin.jsx';
 import AddEvent from './components/AddEvent.jsx';
 import DeleteEvent from './components/DeleteEvent.jsx';
 
@@ -22,13 +20,13 @@ class App extends React.Component {
       view: '',
       username: '',
       password: '',
-      error: ''
+      error: '' // Changes based on response from onSignInClick
     };
   }
 
+  //Changes view based on event that calls function
   changeView(newView) {
     console.log(`view in index.jsx has been changed to ${newView}`);
-    // console.dir(Calendar.prototype.addEvent);
     this.setState({
       view: newView
     });
@@ -75,11 +73,11 @@ class App extends React.Component {
     } else if(view === 'calendar') {
       return <Calendar username={this.state.username} changeView={this.changeView.bind(this)}/>
     } else if (view === 'addEvent') {
-      // not sure if getEvents is being passed in correctly here?
       return <AddEvent username={this.state.username} changeView={this.changeView.bind(this)} getEvents={Calendar.prototype.getEvents.bind(this)}/>
     } else if(view === 'deleteEvent') {
       return <DeleteEvent username={this.state.username} />
     } else {
+      //Default component - sign-in page
       return (
         <Form horizontal className="signin-form">
           <FormGroup controlId="formHorizontalEmail">
@@ -134,6 +132,7 @@ class App extends React.Component {
     }
   }
 
+  //Renders view based on conditional in renderView
   render() {
     return (
       <div>

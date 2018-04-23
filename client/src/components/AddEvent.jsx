@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import Signup from './Signup.jsx'
 import $ from 'jquery';
 import Form from 'react-bootstrap/lib/Form';
 import FormGroup from 'react-bootstrap/lib/FormGroup';
@@ -9,9 +8,7 @@ import Checkbox from 'react-bootstrap/lib/Checkbox';
 import Col from 'react-bootstrap/lib/Col';
 import Button from 'react-bootstrap/lib/Button';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
-// import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom';
 import Calendar from './Calendar.jsx';
-// import DatePicker from "react-bootstrap-date-picker/lib/index.js";
 import Datetime from 'react-datetime';
 
 class AddEvent extends React.Component {
@@ -21,7 +18,7 @@ class AddEvent extends React.Component {
       title: '',
       startDate: '',
       endDate: '',
-      allDay: false, // can keep it false permanently for now?
+      allDay: false // Set true for all-day event
     };
   }
 
@@ -30,17 +27,15 @@ class AddEvent extends React.Component {
   }
 
   handleStartDateChange(e) {
-    // console.log('startDate: ', e._d);
     this.setState({ startDate: e._d});
-    console.log(this.state.startDate);
   }
 
-  handleEndChange(e) {
+  handleEndDateChange(e) {
     this.setState({ endDate: e._d });
   }
 
+  //Creates an event with the state inputs
   onCreateClick(e) {
-    // e.preventDefault();
     var event = {
       title: this.state.title,
       start: this.state.startDate,
@@ -49,21 +44,10 @@ class AddEvent extends React.Component {
       username: this.props.username
     };
 
-    console.log(event);
-
-    // should use addEvent function from Calendar.jsx here
-    // should only re-render calendar page if the event is saved in database correctly
-
-    // console.log('typeof this.props.addEvent: ', typeof this.props.addEvent);
-    console.dir(this.props.addEvent);
     this.addEvent(event);
-
-    // placed in Calendar.jsx's addEvent
-    // this.props.changeView('calendar');
-
-
   }
 
+  //Sends event details to database, fetches new events, and changes view to calendar component.
   addEvent(event) {
     $.ajax({
       method: 'POST',
@@ -75,9 +59,6 @@ class AddEvent extends React.Component {
       },
       success: data => {
         console.log('Data saved: ', data);
-        // console.log(this.props);
-        // console.log(this.username);
-        console.log(this);
         this.props.getEvents(this.props.username);
         this.props.changeView('calendar');
       }
@@ -85,14 +66,8 @@ class AddEvent extends React.Component {
     });
   }
 
-  // toggle() {
-  //   this.setState({
-  //     allDay: !this.state.allDay
-  //   });
-  //   // console.log(`allDay: ${this.state.allDay}`);
-  // }
-
   render () {
+    //Reference React-Bootstrap for help in understanding the code
     return (
       <Form horizontal className="addevent-form">
         <FormGroup controlId="formHorizontalTitle">
@@ -126,7 +101,7 @@ class AddEvent extends React.Component {
           <Col sm={3}>
             <Datetime
             id="end-dateTimePicker"
-            onChange={this.handleEndChange.bind(this)} />
+            onChange={this.handleEndDateChange.bind(this)} />
           </Col>
         </FormGroup>
 
@@ -140,13 +115,5 @@ class AddEvent extends React.Component {
     )
   }
 }
-
-/*
-        <FormGroup>
-          <Col smOffset={2} sm={10}>
-            <Checkbox onClick={this.toggle.bind(this)}>All Day</Checkbox>
-          </Col>
-        </FormGroup>
-*/
 
 export default AddEvent;

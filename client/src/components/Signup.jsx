@@ -33,6 +33,7 @@ class Signup extends React.Component {
     this.setState({ password: e.target.value });
   }
 
+  //POSTs new username, email, and password to server for account creation
   handleSubmit(username, email, password) {
     $.ajax({
       url: "/signup",
@@ -48,6 +49,7 @@ class Signup extends React.Component {
     });
   }
 
+  //Submits new username, email, and password for handleSubmit function
   handleClick() {
     this.setState({
       passwordError: '',
@@ -55,7 +57,6 @@ class Signup extends React.Component {
     });
 
     if(this.passwordIsValid() && this.emailIsValid()) {
-      console.log('I have been clicked!!!');
       this.handleSubmit(this.state.username, this.state.email, this.state.password);
     }
 
@@ -72,14 +73,17 @@ class Signup extends React.Component {
     }
   }
 
+  //Checks if password is valid
   passwordIsValid() {
     return this.state.password.length > 4;
   }
 
+  //Checks if email is valid
   emailIsValid() {
     return this.state.email.includes('@');
   }
 
+  //Checks if password meets minimum requirements as user is typing
   passwordValidationState() {
     const passwordLength = this.state.password.length;
     if (passwordLength > 4) {
@@ -92,6 +96,7 @@ class Signup extends React.Component {
     return null;
   }
 
+  //Checks if email meets minimum requirements as user is typing
   emailValidationState() {
     const emailString = this.state.email;
     if(emailString.length === 0) {
@@ -103,6 +108,7 @@ class Signup extends React.Component {
     }
   }
 
+  //Reference React-bootstrap for more information
   render () {
     return (
       <Form horizontal className="signup-form">

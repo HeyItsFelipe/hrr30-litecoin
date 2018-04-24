@@ -6,16 +6,7 @@ const auth = require('./helpers.js');
 const session = require('express-session');
 const db = require('../database/index.js');
 
-/*
-exports.headers = {
-  'access-control-allow-origin': '*',
-  'access-control-allow-methods': 'GET, POST, PUT, DELETE, OPTIONS',
-  'access-control-allow-headers': 'content-type, accept',
-  'access-control-max-age': 10,
-  'Content-Type': 'text/html'
-};
-*/
-
+//Initializes json bodyparser
 app.use(bodyParser.json());
 
 //Initializes session module
@@ -27,24 +18,13 @@ app.use(session({
 
 app.use(express.static(__dirname + '/../client/dist'));
 
-//A user's homepage
+//Used to restrict access to /calender
 app.get('/calendar', restrict, function(req, res){
   res.send(JSON.stringify('This is the home page!'));
 });
 
-//When a user signs up
-app.get('/signin', function(req, res){
-  auth.checkCredentials(req.body, req, res);
-});
 
-app.get('/signup', (req, res) => {
-  console.log('we are in GET method for /signup in server');
-  console.log(req.body);
-  // res.header(exports.headers);
-  // res.sendFile()
-  // res.redirect(''); // /signup creates a loop, so don't use
-});
-
+//Accepts users credentials for sign-up
 app.post('/signup', function(req, res){
   auth.saveCredentials(req.body, function(){
     req.session.regenerate(function(){
@@ -52,43 +32,32 @@ app.post('/signup', function(req, res){
       res.redirect('/calendar');
     });
   });
-  //After user submits sign up form, user is redirected
-  //to calendar.  At the time of this comment, /calendar has
-  //not been created yet.
 });
 
-//When a user logs in
+//Accepts user's credneials for authentication
 app.post('/signin', function(req, res){
   auth.checkCredentials(req.body, req, res);
 });
 
+//Returns user event data
 app.get('/events', function(req, res) {
-  // console.log('req.body in server\'s app.get is: ', req.params);
-  console.log('req in server\'s app.get: ', req.query);
   db.findUserEvents(req.query.username, (err, data) => {
     if (err) {
       res.sendStatus(500);
     } else {
-      console.log(`Events found for ${req.query.username}`);
-      console.log('data found in app.get in server: ', data);
       res.json(data);
     }
   });
 });
 
+//Adds an event to the database
 app.post('/events', function(req, res) {
-
-  console.log('req.body in server\'s app.post: ', req.body);
   db.addUserEvent(req.body, () => {
-    // if (err) {
-    //   res.sendStatus(500);
-    // } else {
-      // res.json(data);
-      res.status(200).send(`Event saved for ${req.body}!`);
-    // }
+    res.status(200).send(`Event saved for ${req.body}!`);
   });
 });
 
+//Deletes an event to the database
 app.delete('/deleteEvent', function(req, res) {
   db.deleteEvent(req.body.eventID, (err, data) => {
     if(err) {
@@ -99,6 +68,7 @@ app.delete('/deleteEvent', function(req, res) {
 });
 
 
+//Used as middleware to restrict access to /calendar content
 function restrict(req, res, next){
   console.log(req.session);
   if(req.session.user){

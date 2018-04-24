@@ -4,8 +4,9 @@ const express = require('express');
 const db = require('../database/index.js');
 
 
+//Hashes users password and saves username and password to database
 const saveCredentials = function(obj, cb){
-  console.log('save credientials:', obj);
+
   var password = obj.password;
 
   var salt = bcrypt.genSaltSync(10);
@@ -24,6 +25,8 @@ const saveCredentials = function(obj, cb){
   });
 }
 
+
+//Finds users hashed password and compares it with bcrypt resulting in a redirect to users calender or signin page
 const checkCredentials = function(obj, req, res){
   var username = obj.username;
   var password = obj.password;

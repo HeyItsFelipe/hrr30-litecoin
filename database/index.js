@@ -7,6 +7,7 @@ db.once('open', function() {
   console.log('We connected!')
 });
 
+
 var userSchema = mongoose.Schema({
   username : {
     type: String,
@@ -17,20 +18,21 @@ var userSchema = mongoose.Schema({
 });
 
 var User = mongoose.model('User', userSchema);
-// var ObjectId = mongoose.Schema.Types.ObjectId;
+
+//Exposes ObjectID for schema type
 var ObjectId = mongoose.Types.ObjectId;
+
 var eventSchema = mongoose.Schema({
-  // id: ObjectId,
   title: String,
   allDay: Boolean,
   start: Date,
   end: Date,
-  // desc: String,
   username: String
 })
 
 var Event = mongoose.model('Event', eventSchema);
 
+//Adds user credentials passed from POST request to server for sign-up
 const saveUser = (userData, callback) => {
   console.log(userData);
   let userInfo = new User({
@@ -48,6 +50,7 @@ const saveUser = (userData, callback) => {
   });
 };
 
+//Finds user's hashed password for POST request to server for sign-in
 const findUserHash = (username, callback) => {
   console.log('Username is: ' + username);
   User.find({username: username}, 'username password', function(err, user){
@@ -59,6 +62,7 @@ const findUserHash = (username, callback) => {
   });
 };
 
+//Given a user, returns all events from database for that user
 const findUserEvents = (username, callback) => {
   Event.find({username: username}, (err, userEvents) => {
     console.log(`userEvents found in database: ${userEvents}`);
@@ -66,21 +70,18 @@ const findUserEvents = (username, callback) => {
   });
 };
 
+
+//Adds event for user
 const addUserEvent = (event, callback) => {
-  // console.log(event.ObjectId);
-  // let temp = new ObjectId;
-  // console.log(temp);
+
   let userEvent = new Event({
-    id: new ObjectId, // not sure what id should be?; event.ObjectId is undefined
+    id: new ObjectId,
     title: event.title,
     allDay: event.allDay,
     start: event.start,
     end: event.end,
-    // desc: event.desc,
     username: event.username
   });
-
-  console.log('userEvent added in database: ', userEvent);
 
   userEvent.save(err => {
     if (err) {
@@ -91,8 +92,8 @@ const addUserEvent = (event, callback) => {
   });
 };
 
+//Deletes user event for given eventID
 const deleteEvent = (eventID, callback) => {
-  //findByIdAndRemove(id, options, callback)
   Event.findByIdAndRemove(eventID, callback);
 };
 
